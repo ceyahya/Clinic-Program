@@ -109,7 +109,6 @@ function editBtn(index) {
     clientCategory.value = clientContainer[index].category;
     clientPayment.value = clientContainer[index].payment;
     clientInfo.value = clientContainer[index].info;
-    submitBtn.innerHTML = "Edit"
 }
 // edit function
 // delete function
