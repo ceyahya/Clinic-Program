@@ -37,6 +37,7 @@ color.forEach(li => {
 // switch colors
 // clientContainer
 let submitBtn = document.getElementById("submit");
+let saveBtn = document.getElementById("save");
 let clientContainer = [];
 let clientName = document.getElementById("clientName");
 let clientPhone = document.getElementById("clientPhone");
@@ -59,14 +60,14 @@ submitBtn.addEventListener("click", function addClient() {
         let clientData = "";
         for (let index = 0; index < clientContainer.length; index++) {
             clientData += `<tr>
-                                <td>${index}</td>
-                                <td>${clientContainer[index].name}</td>
-                                <td>${clientContainer[index].phone}</td>
-                                <td>${clientContainer[index].category}</td>
-                                <td>${clientContainer[index].payment}</td>
-                                <td>${clientContainer[index].info}</td>
-                                <td><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button></td>
-                                <td><button onclick="deleteBtn(${index})" class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
+                                <td class="col">${index}</td>
+                                <td class="col">${clientContainer[index].name}</td>
+                                <td class="col">${clientContainer[index].phone}</td>
+                                <td class="col">${clientContainer[index].category}</td>
+                                <td class="col">${clientContainer[index].payment}</td>
+                                <td class="col">${clientContainer[index].info}</td>
+                                <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
+                                <button onclick="deleteBtn(${index})" class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
                             </tr>`
             document.querySelector("tbody").innerHTML = clientData
         }
@@ -80,6 +81,7 @@ submitBtn.addEventListener("click", function addClient() {
     clientInfo.value = "";
     // clear inputs
 })
+
 // submit btn click
 // clintContainer from localstorage
 if (window.localStorage.getItem("clientContainer")) {
@@ -87,14 +89,14 @@ if (window.localStorage.getItem("clientContainer")) {
     clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
     for (let index = 0; index < clientContainer.length; index++) {
         clientData += `<tr>
-                            <td>${index}</td>
-                            <td>${clientContainer[index].name}</td>
-                            <td>${clientContainer[index].phone}</td>
-                            <td>${clientContainer[index].category}</td>
-                            <td>${clientContainer[index].payment}</td>
-                            <td>${clientContainer[index].info}</td>
-                            <td><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button></td>
-                            <td><button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
+                            <td class="col">${index}</td>
+                            <td class="col">${clientContainer[index].name}</td>
+                            <td class="col">${clientContainer[index].phone}</td>
+                            <td class="col">${clientContainer[index].category}</td>
+                            <td class="col">${clientContainer[index].payment}</td>
+                            <td class="col">${clientContainer[index].info}</td>
+                            <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
+                            <button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
                         </tr>`
         document.querySelector("tbody").innerHTML = clientData
     }
@@ -109,6 +111,47 @@ function editBtn(index) {
     clientCategory.value = clientContainer[index].category;
     clientPayment.value = clientContainer[index].payment;
     clientInfo.value = clientContainer[index].info;
+    submitBtn.style.display = "none"
+    saveBtn.style.display = "block"
+    saveBtn.addEventListener("click", function editClient() {
+        let client = {
+            name: clientName.value,
+            phone: clientPhone.value,
+            category: clientCategory.value,
+            payment: clientPayment.value,
+            info: clientInfo.value
+        }
+        clientContainer.splice(index, 1, client)
+        window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
+        // show cients
+        if (window.localStorage.getItem("clientContainer")) {
+            let clientData = "";
+            for (let index = 0; index < clientContainer.length; index++) {
+                clientData += `<tr>
+                                    <td class="col">${index}</td>
+                                    <td class="col">${clientContainer[index].name}</td>
+                                    <td class="col">${clientContainer[index].phone}</td>
+                                    <td class="col">${clientContainer[index].category}</td>
+                                    <td class="col">${clientContainer[index].payment}</td>
+                                    <td class="col">${clientContainer[index].info}</td>
+                                    <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
+                                    <button onclick="deleteBtn(${index})" class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
+                                </tr>`
+                document.querySelector("tbody").innerHTML = clientData
+            }
+        }
+        // show cients
+        // clear inputs
+        clientName.value = "";
+        clientPhone.value = "";
+        clientCategory.value = "";
+        clientPayment.value = "";
+        clientInfo.value = "";
+        // clear inputs
+        submitBtn.style.display = "block"
+        saveBtn.style.display = "none"
+        window.scrollTo(0,1314)
+    })
 }
 // edit function
 // delete function
@@ -118,14 +161,14 @@ function deleteBtn(index) {
     let clientData = "";
     for (let index = 0; index < clientContainer.length; index++) {
         clientData += `<tr>
-                            <td>${index}</td>
-                            <td>${clientContainer[index].name}</td>
-                            <td>${clientContainer[index].phone}</td>
-                            <td>${clientContainer[index].category}</td>
-                            <td>${clientContainer[index].payment}</td>
-                            <td>${clientContainer[index].info}</td>
-                            <td><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button></td>
-                            <td><button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
+                            <td class="col">${index}</td>
+                            <td class="col">${clientContainer[index].name}</td>
+                            <td class="col">${clientContainer[index].phone}</td>
+                            <td class="col">${clientContainer[index].category}</td>
+                            <td class="col">${clientContainer[index].payment}</td>
+                            <td class="col">${clientContainer[index].info}</td>
+                            <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
+                            <button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
                         </tr>`
         document.querySelector("tbody").innerHTML = clientData
     }
@@ -144,17 +187,17 @@ search.addEventListener("keyup", function () {
         if (clientContainer[index].name.includes(search.value)
             || clientContainer[index].phone.includes(search.value) || clientContainer[index].category.includes(search.value)) {
             clientData += `<tr>
-                            <td>${index}</td>
-                            <td>${clientContainer[index].name}</td>
-                            <td>${clientContainer[index].phone}</td>
-                            <td>${clientContainer[index].category}</td>
-                            <td>${clientContainer[index].payment}</td>
-                            <td>${clientContainer[index].info}</td>
-                            <td><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button></td>
-                            <td><button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
-                        </tr>`
-        document.querySelector("tbody").innerHTML = clientData
+                                <td class="col">${index}</td>
+                                <td class="col">${clientContainer[index].name}</td>
+                                <td class="col">${clientContainer[index].phone}</td>
+                                <td class="col">${clientContainer[index].category}</td>
+                                <td class="col">${clientContainer[index].payment}</td>
+                                <td class="col">${clientContainer[index].info}</td>
+                                <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
+                                <button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
+                            </tr>`
         }
+        document.querySelector("tbody").innerHTML = clientData
     }
 })
 // search function

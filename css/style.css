@@ -36,12 +36,12 @@ main {
     position: fixed;
     top: 0;
     left: -220px;
-    background-color: rgb(248, 249, 250, .5);
+    background-color: rgb(33, 37, 41, 0.8);
     width: 220px;
     min-height: 100vh;
     z-index: 100;
     padding: 100px 20px;
-    color: var(--dark);
+    color: var(--light);
     text-align: center;
 }
 .settings-box.active {
@@ -51,7 +51,7 @@ main {
     color: var(--light);
 }
 .settings-box .settings-container .option-box h4 {
-    color: var(--dark);
+    color: var(--light);
 }
 .settings-box .settings-container .option-box .colors-list {
     padding: 0;
@@ -59,6 +59,7 @@ main {
 .settings-box .settings-container .option-box .colors-list li {
     width: 20px;
     height: 20px;
+    border: 2px solid var(--light);
     border-radius: 50%;
     cursor: pointer;
     display: inline-block;
@@ -124,6 +125,13 @@ a.active {
 }
 #submit:hover {
     background-color: var(--js-color) !important;
+}
+#save {
+    border-color: var(--success) !important;
+    display: none;
+}
+#save:hover {
+    background-color: var(--success) !important;
 }
 #search,input,textarea {
     border-color: var(--js-color)!important;
