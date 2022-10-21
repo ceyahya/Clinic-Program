@@ -43,6 +43,7 @@ main {
     padding: 100px 20px;
     color: var(--light);
     text-align: center;
+    transition: .5s;
 }
 .settings-box.active {
     left: 0;
