@@ -44,49 +44,9 @@ let clientPhone = document.getElementById("clientPhone");
 let clientCategory = document.getElementById("clientCategory");
 let clientPayment = document.getElementById("clientPayment");
 let clientInfo = document.getElementById("clientInfo");
-// submit btn click
-submitBtn.addEventListener("click", function addClient() {
-    let client = {
-        name: clientName.value,
-        phone: clientPhone.value,
-        category: clientCategory.value,
-        payment: clientPayment.value,
-        info: clientInfo.value
-    }
-    clientContainer.push(client)
-    window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
-    // show cients
-    if (window.localStorage.getItem("clientContainer")) {
-        let clientData = "";
-        for (let index = 0; index < clientContainer.length; index++) {
-            clientData += `<tr>
-                                <td class="col">${index}</td>
-                                <td class="col">${clientContainer[index].name}</td>
-                                <td class="col">${clientContainer[index].phone}</td>
-                                <td class="col">${clientContainer[index].category}</td>
-                                <td class="col">${clientContainer[index].payment}</td>
-                                <td class="col">${clientContainer[index].info}</td>
-                                <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
-                                <button onclick="deleteBtn(${index})" class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
-                            </tr>`
-            document.querySelector("tbody").innerHTML = clientData
-        }
-    }
-    // show cients
-    // clear inputs
-    clientName.value = "";
-    clientPhone.value = "";
-    clientCategory.value = "";
-    clientPayment.value = "";
-    clientInfo.value = "";
-    // clear inputs
-})
-
-// submit btn click
-// clintContainer from localstorage
-if (window.localStorage.getItem("clientContainer")) {
+// display clients function
+function displayClients() {
     let clientData = "";
-    clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
     for (let index = 0; index < clientContainer.length; index++) {
         clientData += `<tr>
                             <td class="col">${index}</td>
@@ -101,7 +61,50 @@ if (window.localStorage.getItem("clientContainer")) {
         document.querySelector("tbody").innerHTML = clientData
     }
 }
+// display none function
+function displayNone() {
+    let clientData = "";
+    document.querySelector("tbody").innerHTML = clientData
+}
+// clintContainer from localstorage
+if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+    displayNone()
+} else {
+    clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
+    displayClients()
+}
+// clear inputs function
+function clearInputs() {
+    clientName.value = "";
+    clientPhone.value = "";
+    clientCategory.value = "";
+    clientPayment.value = "";
+    clientInfo.value = "";
+}
 // clientContainer
+// submit btn click
+submitBtn.addEventListener("click", function addClient() {
+    let client = {
+        name: clientName.value,
+        phone: clientPhone.value,
+        category: clientCategory.value,
+        payment: clientPayment.value,
+        info: clientInfo.value
+    }
+    clientContainer.push(client)
+    window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
+    // show cients
+    if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+        displayNone()
+    } else {
+        displayClients()
+    }
+    // show cients
+    // clear inputs
+    clearInputs()
+    // clear inputs
+})
+// submit btn click
 // edit function
 function editBtn(index) {
     window.scrollTo(0,657)
@@ -121,32 +124,18 @@ function editBtn(index) {
             payment: clientPayment.value,
             info: clientInfo.value
         }
+        console.log(client)
         clientContainer.splice(index, 1, client)
         window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
         // show cients
-        if (window.localStorage.getItem("clientContainer")) {
-            let clientData = "";
-            for (let index = 0; index < clientContainer.length; index++) {
-                clientData += `<tr>
-                                    <td class="col">${index}</td>
-                                    <td class="col">${clientContainer[index].name}</td>
-                                    <td class="col">${clientContainer[index].phone}</td>
-                                    <td class="col">${clientContainer[index].category}</td>
-                                    <td class="col">${clientContainer[index].payment}</td>
-                                    <td class="col">${clientContainer[index].info}</td>
-                                    <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
-                                    <button onclick="deleteBtn(${index})" class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
-                                </tr>`
-                document.querySelector("tbody").innerHTML = clientData
-            }
+        if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+            displayNone()
+        } else {
+            displayClients()
         }
         // show cients
         // clear inputs
-        clientName.value = "";
-        clientPhone.value = "";
-        clientCategory.value = "";
-        clientPayment.value = "";
-        clientInfo.value = "";
+        clearInputs()
         // clear inputs
         submitBtn.style.display = "block"
         saveBtn.style.display = "none"
@@ -158,21 +147,12 @@ function editBtn(index) {
 function deleteBtn(index) {
     clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
     clientContainer.splice(index, 1)
-    let clientData = "";
-    for (let index = 0; index < clientContainer.length; index++) {
-        clientData += `<tr>
-                            <td class="col">${index}</td>
-                            <td class="col">${clientContainer[index].name}</td>
-                            <td class="col">${clientContainer[index].phone}</td>
-                            <td class="col">${clientContainer[index].category}</td>
-                            <td class="col">${clientContainer[index].payment}</td>
-                            <td class="col">${clientContainer[index].info}</td>
-                            <td class="col"><button onclick="editBtn(${index})" class="btn btn-outline-success my-2 mx-2 text-white" type="edit">Edit</button>
-                            <button onclick="deleteBtn(${index})"class="btn btn-outline-danger my-2 mx-2 text-white" type="delete">Delete</button></td>
-                        </tr>`
-        document.querySelector("tbody").innerHTML = clientData
-    }
     window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
+    if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+        displayNone()
+    } else {
+        displayClients()
+    }
 }
 // delete function
 // search function
