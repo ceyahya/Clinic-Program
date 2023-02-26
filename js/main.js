@@ -116,33 +116,59 @@ function editBtn(index) {
     clientInfo.value = clientContainer[index].info;
     submitBtn.style.display = "none"
     saveBtn.style.display = "block"
-    saveBtn.addEventListener("click", function editClient() {
-        let client = {
-            name: clientName.value,
-            phone: clientPhone.value,
-            category: clientCategory.value,
-            payment: clientPayment.value,
-            info: clientInfo.value
-        }
-        console.log(client)
-        clientContainer.splice(index, 1, client)
-        window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
-        // show cients
-        if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
-            displayNone()
-        } else {
-            displayClients()
-        }
-        // show cients
-        // clear inputs
-        clearInputs()
-        // clear inputs
-        submitBtn.style.display = "block"
-        saveBtn.style.display = "none"
-        window.scrollTo(0,1314)
-    })
+    saveBtn.setAttribute("onclick", `editClient(${index})`)
+    // saveBtn.addEventListener("click", function editClient() {
+    //     let client = {
+    //         name: clientName.value,
+    //         phone: clientPhone.value,
+    //         category: clientCategory.value,
+    //         payment: clientPayment.value,
+    //         info: clientInfo.value
+    //     }
+    //     console.log(client)
+    //     clientContainer.splice(index, 1, client)
+    //     window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
+    //     // show cients
+    //     if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+    //         displayNone()
+    //     } else {
+    //         displayClients()
+    //     }
+    //     // show cients
+    //     // clear inputs
+    //     clearInputs()
+    //     // clear inputs
+    //     submitBtn.style.display = "block"
+    //     saveBtn.style.display = "none"
+    //     window.scrollTo(0,1314)
+    // })
 }
 // edit function
+function editClient(index) {
+    let client = {
+        name: clientName.value,
+        phone: clientPhone.value,
+        category: clientCategory.value,
+        payment: clientPayment.value,
+        info: clientInfo.value
+    }
+    console.log(client)
+    clientContainer.splice(index, 1, client)
+    window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
+    // show cients
+    if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
+        displayNone()
+    } else {
+        displayClients()
+    }
+    // show cients
+    // clear inputs
+    clearInputs()
+    // clear inputs
+    submitBtn.style.display = "block"
+    saveBtn.style.display = "none"
+    window.scrollTo(0,1314)
+}
 // delete function
 function deleteBtn(index) {
     clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
