@@ -67,8 +67,8 @@ function displayNone() {
     document.querySelector("tbody").innerHTML = clientData
 }
 // clintContainer from localstorage
-if (JSON.parse(window.localStorage.getItem("clientContainer"))=="") {
-    displayNone()
+if (JSON.parse(window.localStorage.getItem("clientContainer"))==null) {
+    window.localStorage.setItem("clientContainer",JSON.stringify(clientContainer))
 } else {
     clientContainer = JSON.parse(window.localStorage.getItem("clientContainer"))
     displayClients()
